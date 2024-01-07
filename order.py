@@ -15,7 +15,8 @@ class Order:
         self.total_amount = total_amount
     # calculate_tax method for calculate calculate_tax with total taxes given
     def calculate_tax(self, tax_rate):
-        self.total_tax = self.total_amount + tax_rate
+        self.total_tax_amount = self.total_amount + (tax_rate * self.total_amount)
+        self.total_tax = tax_rate * self.total_amount
     # display_orders method for diplay an order details
     def display_order(self):
         return f"order_id: {self.order_id} \n customer_name: {self.customer_name} \n order_date: {self.order_date} \n total_amount: {self.total_amount} \n total_tax: {self.total_tax}"
@@ -36,7 +37,7 @@ class OrderProcessor(Order):
     # calculate_total_revenue method for calculate all total_amount in orders
     def calculate_total_revenue(self):
         for order in  self.orders: 
-            self.total_revenue += order.total_amount
+            self.total_revenue += order.total_tax_amount
     # add_order method for add orders
     def add_order(self, order):
         self.orders.append(order)
@@ -47,13 +48,13 @@ class OrderProcessor(Order):
 
 # create Order instance
 order1 = Order(1,"nada",date.fromisoformat('2019-12-04'), 10000)
-order1.calculate_tax(1000)
+order1.calculate_tax(0.1)
 print(order1.display_order())
 order2 = Order(2,"nisrina",date.fromisoformat('2023-12-04'), 20000)
-order2.calculate_tax(2000)
+order2.calculate_tax(0.1)
 print(order2.display_order())
 order3 = Order(3,"septiana",date.fromisoformat('2024-12-04'), 30000)
-order3.calculate_tax(3000)
+order3.calculate_tax(0.1)
 print(order3.display_order())
 # fill Order to OrderProcessor
 orders = OrderProcessor()
@@ -64,5 +65,3 @@ orders.add_order(order3)
 orders.calculate_total_tax()
 orders.calculate_total_revenue()
 orders.display_orders()
-
-
